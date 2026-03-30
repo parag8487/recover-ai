@@ -1,0 +1,14 @@
+{
+    "version": 2,
+    "public": true,
+    "rewrites": [
+        {
+            "source": "/clinical_companion/(.*)",
+            "destination": "/frontend/public/clinical_companion/$1"
+        },
+        {
+            "source": "/(.*)",
+            "destination": "/frontend/$1"
+        }
+    ]
+}
