@@ -9,10 +9,6 @@ export default defineConfig({
             '/api': {
                 target: 'http://localhost:5005',
                 changeOrigin: true
-            },
-            '/clinical_companion': {
-                target: 'http://localhost:5005',
-                changeOrigin: true
             }
         }
     }
