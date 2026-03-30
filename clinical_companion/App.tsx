@@ -662,6 +662,26 @@ const App: React.FC = () => {
             </div>
           </div>
 
+          {/* Chat Suggestions */}
+          {!chatInput.trim() && !isProcessing && (
+            <div className="flex flex-wrap justify-center gap-2 mb-4 animate-in fade-in slide-in-from-bottom-2 duration-500">
+              <button
+                onClick={() => setChatInput("At 8:00 AM took 2 tablets of Paracetamol recommended by Dr. Smith")}
+                className="bg-surface/80 backdrop-blur-md border border-border px-3 py-1.5 rounded-full text-[10px] font-medium text-text-secondary hover:text-primary hover:border-primary/30 transition-all shadow-sm flex items-center gap-1.5"
+              >
+                <i className="fa-solid fa-lightbulb text-primary/70"></i>
+                Try: "At 8:00 AM took 2 tablets..."
+              </button>
+              <button
+                onClick={() => setChatInput("When did I last take my vitamins?")}
+                className="bg-surface/80 backdrop-blur-md border border-border px-3 py-1.5 rounded-full text-[10px] font-medium text-text-secondary hover:text-primary hover:border-primary/30 transition-all shadow-sm flex items-center gap-1.5"
+              >
+                <i className="fa-solid fa-circle-question text-primary/70"></i>
+                Ask: "When did I last take..."
+              </button>
+            </div>
+          )}
+
           {/* Chat input */}
           <form onSubmit={handleChatSubmission}>
             <div className={`bg-surface/95 backdrop-blur-2xl rounded-2xl shadow-lg border transition-all p-1.5 flex items-center gap-1 ${isProcessing ? 'border-primary/40 opacity-80' : 'border-border focus-within:border-primary/50 focus-within:shadow-ring'}`}>
