@@ -37,7 +37,7 @@ export const generateClinicalHandover = async (
   logs: MedicalLog[]
 ): Promise<HandoverSummary> => {
   const apiKey = import.meta.env.GEMINI_API_KEY || import.meta.env.VITE_GEMINI_API_KEY || "YOUR_API_KEY_HERE";
-  const ai = new GoogleGenAI(apiKey);
+  const ai = new GoogleGenAI({ apiKey });
 
   const systemInstruction = `
     You are a senior clinical documentation specialist. 
@@ -93,7 +93,7 @@ export const processTextLog = async (
   recentLogContext?: { id: string, name: string, type: string } | null
 ): Promise<GeminiExtractionResponse> => {
   const apiKey = import.meta.env.GEMINI_API_KEY || import.meta.env.VITE_GEMINI_API_KEY || "YOUR_API_KEY_HERE";
-  const ai = new GoogleGenAI(apiKey);
+  const ai = new GoogleGenAI({ apiKey });
   const response = await ai.models.generateContent({
     model: 'gemini-2.5-flash',
     contents: [{ text: `Input text: """${text}"""` }],
@@ -159,7 +159,7 @@ export const processVoiceCommand = async (
   recentLogContext?: { id: string, name: string, type: string } | null
 ): Promise<GeminiExtractionResponse> => {
   const apiKey = import.meta.env.GEMINI_API_KEY || import.meta.env.VITE_GEMINI_API_KEY || "YOUR_API_KEY_HERE";
-  const ai = new GoogleGenAI(apiKey);
+  const ai = new GoogleGenAI({ apiKey });
 
   const response = await ai.models.generateContent({
     model: 'gemini-2.5-flash',
@@ -230,7 +230,7 @@ export const assessLogQuality = async (
   log: GeminiExtractionResponse
 ): Promise<QualityAssessment> => {
   const apiKey = import.meta.env.GEMINI_API_KEY || import.meta.env.VITE_GEMINI_API_KEY || "YOUR_API_KEY_HERE";
-  const ai = new GoogleGenAI(apiKey);
+  const ai = new GoogleGenAI({ apiKey });
 
   const systemInstruction = `
     Assess the quality of a medical log record. 
@@ -269,7 +269,7 @@ export const generateAuditEntry = async (
   source: "voice" | "text" | "system" = "voice"
 ): Promise<AuditEntry> => {
   const apiKey = import.meta.env.GEMINI_API_KEY || import.meta.env.VITE_GEMINI_API_KEY || "YOUR_API_KEY_HERE";
-  const ai = new GoogleGenAI(apiKey);
+  const ai = new GoogleGenAI({ apiKey });
 
   const systemInstruction = `
     Generate a factual audit entry for a clinical record action.
@@ -311,7 +311,7 @@ export const generateAuditEntry = async (
  */
 export const synthesizeSpeech = async (text: string): Promise<string> => {
   const apiKey = import.meta.env.GEMINI_API_KEY || import.meta.env.VITE_GEMINI_API_KEY || "YOUR_API_KEY_HERE";
-  const ai = new GoogleGenAI(apiKey);
+  const ai = new GoogleGenAI({ apiKey });
   const response = await ai.models.generateContent({
     model: "gemini-2.5-flash-preview-tts",
     contents: [{ parts: [{ text }] }],
@@ -365,7 +365,7 @@ export const queryMedicalLogs = async (
   logs: MedicalLog[]
 ): Promise<QueryResponse> => {
   const apiKey = import.meta.env.GEMINI_API_KEY || import.meta.env.VITE_GEMINI_API_KEY || "YOUR_API_KEY_HERE";
-  const ai = new GoogleGenAI(apiKey);
+  const ai = new GoogleGenAI({ apiKey });
 
   const systemInstruction = `
     Answer medical history questions by reconciling logs from home, doctor visits, and hospital stays.
