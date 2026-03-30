@@ -1,0 +1,7 @@
+{
+  "name": "Voice Clinical Log Assistant",
+  "description": "A world-class medical logging assistant that uses Gemini AI to convert natural speech into structured medical records for medications, vitamins, and treatments.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
