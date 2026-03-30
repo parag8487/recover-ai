@@ -44,7 +44,7 @@ app.use(require('./middleware/errorMiddleware'));
 
 
 // Database Connection
-const PORT = 5005;
+const PORT = process.env.PORT || 5005;
 process.env.DEMO_MODE = 'true';
 
 mongoose.set('bufferCommands', false);

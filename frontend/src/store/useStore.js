@@ -2,7 +2,7 @@ import { create } from 'zustand'
 import axios from 'axios'
 import { io } from 'socket.io-client'
 
-axios.defaults.baseURL = 'http://localhost:5005'
+axios.defaults.baseURL = import.meta.env.VITE_API_URL || 'http://localhost:5005'
 
 const useStore = create((set, get) => ({
     user: { id: 'demo-judge', name: 'Demo User (Judge)', role: 'Patient' },
@@ -29,7 +29,7 @@ const useStore = create((set, get) => ({
     },
 
     initSocket: (patientId) => {
-        const socket = io('http://localhost:5005')
+        const socket = io(import.meta.env.VITE_API_URL || 'http://localhost:5005')
         socket.emit('join', patientId)
         set({ socket })
     },
