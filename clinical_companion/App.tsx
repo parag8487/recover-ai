@@ -670,14 +670,14 @@ const App: React.FC = () => {
                 className="bg-surface/80 backdrop-blur-md border border-border px-3 py-1.5 rounded-full text-[10px] font-medium text-text-secondary hover:text-primary hover:border-primary/30 transition-all shadow-sm flex items-center gap-1.5"
               >
                 <i className="fa-solid fa-lightbulb text-primary/70"></i>
-                Try: "At 8:00 AM took 2 tablets..."
+                Try: "At 8:00 AM took 2 tablets of Amlodipine recommended by Dr. Sharma"
               </button>
               <button
-                onClick={() => setChatInput("When did I last take my vitamins?")}
+                onClick={() => setChatInput("When did I last take my tablets?")}
                 className="bg-surface/80 backdrop-blur-md border border-border px-3 py-1.5 rounded-full text-[10px] font-medium text-text-secondary hover:text-primary hover:border-primary/30 transition-all shadow-sm flex items-center gap-1.5"
               >
                 <i className="fa-solid fa-circle-question text-primary/70"></i>
-                Ask: "When did I last take..."
+                Ask: "When did I last take my tablets?"
               </button>
             </div>
           )}

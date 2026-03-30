@@ -2,7 +2,8 @@
     "name": "recoverai-lite-root",
     "private": true,
     "scripts": {
-        "build": "cd frontend && npm install && npm run build",
+        "build": "cd frontend && npm install --legacy-peer-deps && npm run build",
+        "install": "cd frontend && npm install --legacy-peer-deps",
         "start": "cd frontend && npm run dev"
     }
 }
