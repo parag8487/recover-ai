@@ -8,7 +8,7 @@ const genAI = new GoogleGenerativeAI(apiKey);
 async function run() {
     console.log("Testing standard SDK @google/generative-ai...");
     try {
-        const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
+        const model = genAI.getGenerativeModel({ model: "gemini-3-flash-preview" });
         const result = await model.generateContent("Hello");
         console.log("Success! Response:", result.response.text());
     } catch (err) {

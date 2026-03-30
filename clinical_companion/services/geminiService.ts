@@ -61,7 +61,7 @@ export const generateClinicalHandover = async (
   const logDataString = JSON.stringify(logs.slice(0, 50));
 
   const response = await ai.models.generateContent({
-    model: 'gemini-2.5-flash',
+    model: 'gemini-3-flash-preview',
     contents: [{ text: `Patient: ${patientName}\nLogs:\n${logDataString}` }],
     config: {
       systemInstruction,
@@ -101,7 +101,7 @@ export const processTextLog = async (
   }
   const ai = new GoogleGenAI({ apiKey: apiKey || "YOUR_API_KEY_HERE" });
   const response = await ai.models.generateContent({
-    model: 'gemini-2.5-flash',
+    model: 'gemini-3-flash-preview',
     contents: [{ text: `Input text: """${text}"""` }],
     config: {
       systemInstruction: getLoggingSystemInstruction(isHospitalModeActive, recentLogContext),
@@ -171,7 +171,7 @@ export const processVoiceCommand = async (
   const ai = new GoogleGenAI({ apiKey: apiKey || "YOUR_API_KEY_HERE" });
 
   const response = await ai.models.generateContent({
-    model: 'gemini-2.5-flash',
+    model: 'gemini-3-flash-preview',
     contents: [
       {
         parts: [
@@ -250,7 +250,7 @@ export const assessLogQuality = async (
   `;
 
   const response = await ai.models.generateContent({
-    model: 'gemini-2.5-flash',
+    model: 'gemini-3-flash-preview',
     contents: [{ text: `Input record:\n${JSON.stringify(log)}` }],
     config: {
       systemInstruction,
@@ -299,7 +299,7 @@ export const generateAuditEntry = async (
   `;
 
   const response = await ai.models.generateContent({
-    model: 'gemini-2.5-flash',
+    model: 'gemini-3-flash-preview',
     contents: [{ text: contextPrompt }],
     config: {
       systemInstruction,
@@ -406,7 +406,7 @@ export const queryMedicalLogs = async (
   })));
 
   const response = await ai.models.generateContent({
-    model: 'gemini-2.5-flash',
+    model: 'gemini-3-flash-preview',
     contents: [
       {
         parts: [
