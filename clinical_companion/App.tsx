@@ -27,10 +27,43 @@ const DEFAULT_PROFILE: UserProfile = {
   color: 'bg-primary'
 };
 
+const SUGGESTIONS_DATA = {
+  medication: [
+    "Took 2 tablets of Aspirin at 9:00 AM",
+    "Had my insulin injection recorded at 8:00 AM",
+    "Just took my daily blood pressure medication",
+    "Took my multivitamin with lunch"
+  ],
+  vitamin: [
+    "Took Vitamin D and Omega-3 supplements",
+    "Had a Calcium chewable after breakfast",
+    "Took my B12 supplement"
+  ],
+  treatment: [
+    "Completed physical therapy exercise session",
+    "Applied topical cream to the arm rash",
+    "Finished my breathing exercises"
+  ],
+  observation: [
+    "Feeling a slight headache this evening",
+    "Slept for 7 hours, feeling rested",
+    "Glucose level is 105 mg/dL",
+    "Appetite is improving today"
+  ],
+  doctor_visit: [
+    "Consulted Dr. Smith about the leg pain",
+    "Annual checkup scheduled for next Monday",
+    "Informed the clinic about the new prescription"
+  ]
+};
+
 const App: React.FC = () => {
   const [logs, setLogs] = useState<MedicalLog[]>([]);
   const [profiles, setProfiles] = useState<UserProfile[]>([DEFAULT_PROFILE]);
   const [activeProfileId, setActiveProfileId] = useState<string>(DEFAULT_PROFILE.id);
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const [selectedSuggestionCategory, setSelectedSuggestionCategory] = useState<string | null>(null);
+
   const [isHospitalMode, setIsHospitalMode] = useState(false);
   const [currentStayId, setCurrentStayId] = useState<string | null>(null);
 
@@ -472,6 +505,11 @@ const App: React.FC = () => {
     setIsHospitalMode(!isHospitalMode);
   };
 
+  const handleSuggestionSelect = (text: string) => {
+    setChatInput(text);
+    setShowSuggestions(false);
+  };
+
   const accentColorClass = activeProfile.color.replace('bg-', 'text-');
 
   return (
@@ -662,29 +700,78 @@ const App: React.FC = () => {
             </div>
           </div>
 
-          {/* Chat Suggestions */}
-          {!chatInput.trim() && !isProcessing && (
-            <div className="flex flex-wrap justify-center gap-2 mb-4 animate-in fade-in slide-in-from-bottom-2 duration-500">
-              <button
-                onClick={() => setChatInput("At 8:00 AM took 2 tablets of Paracetamol recommended by Dr. Smith")}
-                className="bg-surface/80 backdrop-blur-md border border-border px-3 py-1.5 rounded-full text-[10px] font-medium text-text-secondary hover:text-primary hover:border-primary/30 transition-all shadow-sm flex items-center gap-1.5"
-              >
-                <i className="fa-solid fa-lightbulb text-primary/70"></i>
-                Try: "At 8:00 AM took 2 tablets of Amlodipine recommended by Dr. Sharma"
-              </button>
-              <button
-                onClick={() => setChatInput("When did I last take my tablets?")}
-                className="bg-surface/80 backdrop-blur-md border border-border px-3 py-1.5 rounded-full text-[10px] font-medium text-text-secondary hover:text-primary hover:border-primary/30 transition-all shadow-sm flex items-center gap-1.5"
-              >
-                <i className="fa-solid fa-circle-question text-primary/70"></i>
-                Ask: "When did I last take my tablets?"
-              </button>
-            </div>
-          )}
+          {/* Category-Based Chat Suggestions */}
+          <div className="relative mb-4">
+            {showSuggestions && (
+              <div className="absolute bottom-full left-0 right-0 mb-4 bg-surface/95 backdrop-blur-2xl rounded-2xl border border-border shadow-2xl p-4 animate-in slide-in-from-bottom-4 duration-300 z-50">
+                <div className="flex justify-between items-center mb-4 pb-2 border-b border-border/50">
+                  <h3 className="text-xs font-black uppercase tracking-widest text-text-secondary flex items-center gap-2">
+                    <i className="fa-solid fa-lightbulb text-primary"></i>
+                    Smart Suggestions
+                  </h3>
+                  <button onClick={() => { setShowSuggestions(false); setSelectedSuggestionCategory(null); }} className="text-text-tertiary hover:text-text-primary px-2 transition-colors">
+                    <i className="fa-solid fa-xmark"></i>
+                  </button>
+                </div>
+
+                <div className="space-y-4">
+                  {!selectedSuggestionCategory ? (
+                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                      {Object.keys(SUGGESTIONS_DATA).map((cat) => (
+                        <button
+                          key={cat}
+                          onClick={() => setSelectedSuggestionCategory(cat)}
+                          className="flex items-center gap-2.5 px-3 py-2.5 rounded-xl border border-border bg-surface-raised/50 text-left text-xs font-bold text-text-primary hover:border-primary/40 hover:bg-primary/5 transition-all group"
+                        >
+                          <i className={`fa-solid ${cat === 'medication' ? 'fa-pills text-blue-400' :
+                            cat === 'vitamin' ? 'fa-capsules text-emerald-400' :
+                              cat === 'treatment' ? 'fa-hand-holding-medical text-amber-400' :
+                                cat === 'observation' ? 'fa-stethoscope text-purple-400' :
+                                  'fa-user-doctor text-rose-400'
+                            } group-hover:scale-110 transition-transform`}></i>
+                          <span className="capitalize">{cat.replace('_', ' ')}</span>
+                        </button>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="space-y-2">
+                      <button
+                        onClick={() => setSelectedSuggestionCategory(null)}
+                        className="text-[10px] font-bold text-primary flex items-center gap-1.5 hover:underline mb-2 px-1"
+                      >
+                        <i className="fa-solid fa-arrow-left"></i>
+                        Back to Categories
+                      </button>
+                      <div className="grid grid-cols-1 gap-2 max-h-48 overflow-y-auto pr-1 thin-scrollbar">
+                        {SUGGESTIONS_DATA[selectedSuggestionCategory as keyof typeof SUGGESTIONS_DATA].map((s, idx) => (
+                          <button
+                            key={idx}
+                            onClick={() => handleSuggestionSelect(s)}
+                            className="text-left px-4 py-3 rounded-xl border border-border bg-surface-raised/30 text-xs font-medium text-text-secondary hover:text-text-primary hover:border-primary/30 hover:bg-primary/5 transition-all"
+                          >
+                            {s}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+          </div>
 
           {/* Chat input */}
           <form onSubmit={handleChatSubmission}>
             <div className={`bg-surface/95 backdrop-blur-2xl rounded-2xl shadow-lg border transition-all p-1.5 flex items-center gap-1 ${isProcessing ? 'border-primary/40 opacity-80' : 'border-border focus-within:border-primary/50 focus-within:shadow-ring'}`}>
+              <button
+                type="button"
+                onClick={() => { setShowSuggestions(!showSuggestions); setSelectedSuggestionCategory(null); }}
+                className={`flex-shrink-0 w-9 h-9 rounded-xl flex items-center justify-center transition-all ${showSuggestions ? 'bg-primary text-white shadow-sm' : 'text-text-secondary hover:bg-surface-raised hover:text-primary'}`}
+                title="Smart Suggestions"
+              >
+                <i className={`fa-solid ${showSuggestions ? 'fa-xmark' : 'fa-lightbulb'}`}></i>
+              </button>
+
               <input
                 type="text"
                 value={chatInput}
