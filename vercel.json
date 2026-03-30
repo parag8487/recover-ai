@@ -1,6 +1,5 @@
 {
     "version": 2,
-    "public": true,
     "rewrites": [
         {
             "source": "/clinical_companion/(.*)",
@@ -8,7 +7,7 @@
         },
         {
             "source": "/(.*)",
-            "destination": "/frontend/$1"
+            "destination": "/frontend/dist/$1"
         }
     ]
 }

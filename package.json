@@ -1,0 +1,8 @@
+{
+    "name": "recoverai-lite-root",
+    "private": true,
+    "scripts": {
+        "build": "cd frontend && npm install && npm run build",
+        "start": "cd frontend && npm run dev"
+    }
+}
