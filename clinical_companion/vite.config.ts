@@ -11,6 +11,7 @@ export default defineConfig(({ mode }) => {
       host: '0.0.0.0',
     },
     plugins: [react()],
+    envPrefix: ['VITE_', 'GEMINI_'],
     resolve: {
       alias: {
         '@': path.resolve(__dirname, '.'),
