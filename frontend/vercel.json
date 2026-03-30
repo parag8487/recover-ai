@@ -1,0 +1,12 @@
+{
+    "rewrites": [
+        {
+            "source": "/clinical_companion/(.*)",
+            "destination": "/clinical_companion/$1"
+        },
+        {
+            "source": "/(.*)",
+            "destination": "/index.html"
+        }
+    ]
+}
